@@ -7,16 +7,30 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false})
 var connection = mysql.createConnection(dbconfig);
 var bkfd2Password = require('pbkdf2-password');
 var hasher = bkfd2Password();
-
+var SECRET = require('../config').jwt;
 
 
 connection.connect();
 
 router.get('/', function(req,res, next){
-	res.render('signup', {
-        title: "signup",
-        dup : false
-    });
+    if(req.session.user){
+        var token = req.session.user;
+		var decoded = jwt.verify(token, SECRET);
+		if(decoded){
+			res.status(200).redirect('/');
+		}else{
+            res.render('signup', {
+                title: "signup",
+                dup : false
+            });
+        }
+    }else{
+        res.render('signup', {
+            title: "signup",
+            dup : false
+        });
+	}
+	
 });
 
 
@@ -46,12 +60,10 @@ router.post('/', async function(req, res){
                         console.log("hasing error! : " + err);
                     }
                     else{
-                        var query2 = `INSERT INTO user(email, password, name, salt) VALUES("${data['email']}","${hash}","${data['name']}","${salt}")`;
+                        var query2 = `INSERT INTO user(email, password, name, role,salt) VALUES("${data['email']}","${hash}","${data['name']}", "user" ,"${salt}")`;
                         console.log("addUser query:"+ query2);
                         connection.query(query2,(err,result)=>{
-                            res.render('index', {
-                                title: "index",
-                            });
+                            res.redirect('/');
                             return;
                         });   
                     }
