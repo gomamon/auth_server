@@ -8,6 +8,7 @@
 
 </head>
 <body >
+
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,62 +16,27 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 				<a class="navbar-brand" href="/">AUTH_GOMAMON</a>
-			
+				
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 					<li class="nav-item active text-light">
 					</li>
 				</ul>
 
 				<p class="nav-link my-2 my-sm-0 text-light">
-					로그인 해주세요!
+
+						<p class="nav-link my-2 my-sm-0 text-light">
+							로그인 해주세요!
+						</p>
+						<a class="nav-link btn btn-outline-success my-2 my-sm-0" href="/signin">Sign in</a>
 				</p>
-				<a class="nav-link btn btn-outline-success my-2 my-sm-0" href="/signin">Sign in</a>
 			</div>
 		</nav>
 	</header>
-
-	<main>
-		<form action="/signin" class="form-signin" method="post">
-			<div class="text-center pb-3">
-					<p class="h1"><i class="fas fa-user"></i></p><br>
-					<p class="h4">Sign in to AUTH_GOMAMON</p>		
-					<% if(wrong){ %>
-					<div class="alert alert-danger" role="alert">
-						<%= errmsg %>
-						<% if(errtype == 'unauth') {%>
-							<a data-toggle="modal" data-target="#certification_modal">인증메일 다시 보내기</a>
-						<% } %>
-					</div>
-				<% } %>
-			</div>
-
-			<div class="card p-3 mt-3">
-				<div class="input-group mb-2 d-flex flex-column">
-					<label for="email">Email address</label>
-					<input type="email" name="email" id="email" class="form-control" required autofocus>
-				</div>
-				<div class="input-group mb-4 d-flex flex-column">
-					<div class="d-flex justify-content-between">
-						<label for="password">Password</label>
-						<a href="#" class="ml-auto">비밀번호 찾기</a>
-					</div>
-					<input type="password" name= "password"id="password" class="form-control" required>
-				</div>
-				<a href="/oauth" class="btn btn-block btn-lg btn-warning btn_login">KaKao</a>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-			</div>
-			<div class="card pt-3 mt-3 text-center">
-				<p>계정이 없으시다구요? <a href='http://localhost:3000/signup'>회원가입</a>하기!</p>
-			</div>
-
-		</form>
-		
-
+	
+	<main class="text-center">
+		<h1>인증메일을 보냈습니다.</h1>
+		<p>회원가입 할때 사용했던 이메일을 통해 훈민정음이 보낸 인증메일을 확인해주세요.</p>
 	</main>
-
-
-
-
 	<!-- script -->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

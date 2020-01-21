@@ -5,7 +5,7 @@ var mailconfig = require('../config').gmail
 //token
 var jwt = require("jsonwebtoken");
 var randtoken = require("rand-token");
-var jwtconfig = require('../config').jwt
+var jwtconfig = require('../config').jwt.certification
 
 var smptAuth = {
     user: mailconfig.email,
