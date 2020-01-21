@@ -1,41 +1,35 @@
 var express = require('express')
 var router = express.Router();
-var bodyParser = require('body-parser')
+
 var mysql = require('mysql')
 var dbconfig = require('../config').db;
-var urlencodedParser = bodyParser.urlencoded({ extended: false})
 var connection = mysql.createConnection(dbconfig);
+
 var bkfd2Password = require('pbkdf2-password');
 var hasher = bkfd2Password();
-var SECRET = require('../config').jwt;
+
 var mailer = require('./mailer')
 
 
 connection.connect();
 
-router.get('/', function(req,res, next){
-    if(req.session.user){
-        var token = req.session.user;
-		var decoded = jwt.verify(token, SECRET);
-		if(decoded){
-			res.status(200).redirect('/');
-		}else{
-            res.render('signup', {
-                title: "signup",
-                dup : false
-            });
-        }
-    }else{
+router.get('/signup', function(req,res, next){
+
+    console.log(req.user);
+
+    if(req.user !== undefined){
+        res.redirect('/');
+    }
+    else{
         res.render('signup', {
             title: "signup",
             dup : false
         });
-	}
-	
+    }
 });
 
 
-router.post('/', async function(req, res){
+router.post('/signup', async function(req, res){
     var result = req.body;
     const data ={
         "email" : result.email,

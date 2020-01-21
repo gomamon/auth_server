@@ -10,10 +10,6 @@ var mysql = require("mysql");
 var dbConfig = require("../config").db;
 var connection = mysql.createConnection(dbConfig);
 
-//redis
-// const redis = require('redis');
-// const redisConfig = require('../config').redis;
-// const redisClient = redis.createClient(dbConfig);
 
 //token
 var bodyParser = require("body-parser");

@@ -13,6 +13,7 @@ var usersRouter = require('./routes/users');
 var signupRouter = require('./routes/signup');
 var signoutRouter = require('./routes/signout');
 var passportRouter = require('./routes/passport');
+var certificationRouter = require('./routes/certification');
 
 var upload = multer();
 var app = express();
@@ -71,8 +72,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 // app.use('/',signinRouter);
 app.use('/',passportRouter);
-app.use('/signup',signupRouter);
+app.use('/',signupRouter);
 app.use('/signout',signoutRouter);
+app.use('/', certificationRouter);
 
 app.set('views', __dirname + '/views');
 // public 경로 설정

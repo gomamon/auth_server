@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var nodemailer = require('nodemailer');
 
 router.use('/signin', require('./signin'));
 router.use('/signup', require('./signup'));
