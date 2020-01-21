@@ -9,9 +9,11 @@ var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var signinRouter = require('./routes/signin');
+// var signinRouter = require('./routes/signin');
 var signupRouter = require('./routes/signup');
 var signoutRouter = require('./routes/signout');
+var passportRouter = require('./routes/passport');
+
 var upload = multer();
 var app = express();
 
@@ -24,7 +26,7 @@ var redisConfig = require('./config').redis;
 var client = redis.createClient(redisConfig);
 
 var passport = require('passport');
-
+var localStrategy = require('passport-local').Strategy;
 
 app.use(session({
   secret: 'secret_key',
@@ -32,14 +34,15 @@ app.use(session({
     host: redisConfig.host,
     port: redisConfig.port,
     client: client,
-    prefix : "session",
-    db : 0
+    prefix : "session"
   }),
   saveUninitialized:false, 
   resave : true 
   }
 ));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // view engine setup
@@ -58,13 +61,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 
-app.use(passport.initialize());
+
+// passport
+
 
 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/',signinRouter);
+// app.use('/',signinRouter);
+app.use('/',passportRouter);
 app.use('/signup',signupRouter);
 app.use('/signout',signoutRouter);
 

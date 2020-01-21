@@ -8,6 +8,7 @@ var connection = mysql.createConnection(dbconfig);
 var bkfd2Password = require('pbkdf2-password');
 var hasher = bkfd2Password();
 var SECRET = require('../config').jwt;
+var mailer = require('./mailer')
 
 
 connection.connect();
@@ -60,9 +61,10 @@ router.post('/', async function(req, res){
                         console.log("hasing error! : " + err);
                     }
                     else{
-                        var query2 = `INSERT INTO user(email, password, name, role,salt) VALUES("${data['email']}","${hash}","${data['name']}", "user" ,"${salt}")`;
+                        var query2 = `INSERT INTO user(email, password, name, role,salt) VALUES("${data['email']}","${hash}","${data['name']}", "unauth" ,"${salt}")`;
                         console.log("addUser query:"+ query2);
                         connection.query(query2,(err,result)=>{
+                            mailer.sendEmail(data['email']);
                             res.redirect('/');
                             return;
                         });   
