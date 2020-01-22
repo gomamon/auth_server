@@ -9,10 +9,11 @@ var flash = require("connect-flash");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-// var signinRouter = require('./routes/signin');
 var signupRouter = require('./routes/signup');
 var signoutRouter = require('./routes/signout');
 var passportRouter = require('./routes/passport');
+
+var resetRouter = require('./routes/reset');
 var certificationRouter = require('./routes/certification');
 
 var upload = multer();
@@ -24,23 +25,31 @@ var redis = require('redis');
 var session = require('express-session');
 var redisStore = require('connect-redis')(session);
 var redisConfig = require('./config').redis;
-var client = redis.createClient(redisConfig);
+var redisclient = redis.createClient(redisConfig);
 
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
+
 
 app.use(session({
   secret: 'secret_key',
   store: new redisStore({
     host: redisConfig.host,
     port: redisConfig.port,
-    client: client,
+    client: redisclient,
     prefix : "session"
   }),
-  saveUninitialized:false, 
-  resave : true 
+  saveUninitialized:true, 
+  resave : false,
+  cookie:{
+    path: '/',
+    httpOnly: true,
+    secure: false,
+    maxAge: 1000*60*60*24*30
   }
-));
+}));
+
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -75,6 +84,7 @@ app.use('/',passportRouter);
 app.use('/',signupRouter);
 app.use('/signout',signoutRouter);
 app.use('/', certificationRouter);
+app.use('/', resetRouter);
 
 app.set('views', __dirname + '/views');
 // public 경로 설정

@@ -1,8 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+function createCode(objArr, iLength) {
+	var arr = objArr;
+	var randomStr = "";
+	for (var j=0; j<iLength; j++) {
+	randomStr += arr[Math.floor(Math.random()*arr.length)];
+	}
+	return randomStr
+}
+	
 
-router.use('/signin', require('./signin'));
 router.use('/signup', require('./signup'));
 
 

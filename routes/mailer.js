@@ -5,7 +5,7 @@ var mailconfig = require('../config').gmail
 //token
 var jwt = require("jsonwebtoken");
 var randtoken = require("rand-token");
-var jwtconfig = require('../config').jwt.certification
+var jwtconfig = require('../config').jwt
 
 var smptAuth = {
     user: mailconfig.email,
@@ -20,26 +20,60 @@ var transporter = nodemailer.createTransport(
     })
 )
 
+function getRandomStr() {
+	var arr  = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var result = '';				
+    for(var i = 0; i < 6; i++) {
+        result += arr.charAt(Math.floor(Math.random() * arr.length));
+    }
+    console.log(result);
+    return result
+}
+	
+
 module.exports = {
-    sendEmail: (emailto)=>{ 
-        var emailToken = jwt.sign(
+    sendEmail: (emailto, type)=>{ 
+
+        var confirmToken = jwt.sign(
             {
-                user : emailto
+                user : emailto,
+                rand : getRandomStr(),
             },
-            jwtconfig,
+            jwtconfig.certification,
+            {
+                expiresIn: '1d',
+            }
+        )
+        var resetToken = jwt.sign(
+            {
+                user : emailto,
+                rand : getRandomStr(),
+            },
+            jwtconfig.reset,
             {
                 expiresIn: '1d',
             }
         )
 
-        var url =`http://localhost:3000/confirmation/${emailToken}`;
+        var subjects = {
+            confirm : '훈민정음 이메일인증 해주시지요.',
+            reset : '훈민정음 비밀번호 초기화'
+        }
+        var url = {
+            confirm : `http://localhost:3000/confirmation/${confirmToken}`,
+            reset : `http://localhost:3000/reset/password/${resetToken}`
+        }
+        var contents = {
+            confirm : `해당 링크를 누르면 자네는 훈민정음의 진정한 회원이 될수있지... <a href="${url[type]}">${url[type]}</a>`,
+            reset : `해당 링크를 누르면 자네의 비밀번호를 다시 설정할 수 있을 걸세 <a href="${url[type]}">${url[type]}</a>`,
+        }
 
         console.log("emailto:"+emailto+typeof(emailto));
         transporter.sendMail({
             from: mailconfig.email,
             to: emailto,
-            subject: '훈민정음 이메일인증 해주시지요.',
-            html:`해당 링크를 누르면 자네는 훈민정음의 진정한 회원이 될수있지... <a href="${url}">${url}</a>`
+            subject: subjects[type],
+            html: contents[type],
         }, function(err,res){
             if(err){
                 console.log("smpterror!"+err);

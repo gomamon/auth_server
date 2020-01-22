@@ -22,10 +22,12 @@ var clientID = require('../config').kakao.key;
 connection.connect();
 
 passport.serializeUser(function (user,done){
+    console.log('passport serializeUser call')
     done(null, user);
 });
 
 passport.deserializeUser(function (user, done){
+    console.log('passport deserializeUser call')
     done(null, user);
 });
 
@@ -124,10 +126,11 @@ passport.use(
                                 'name' : result[0].name,
                                 'role' : result[0].role
                             }
-                            if(user.role === "auth")
-                                return done(null, user);
-                            else
+                            if(user.role === "unauth")
                                 return done(null, false, req.flash('err','unauth'));
+                            else
+                                return done(null, user);
+
                         }
                         else{
                             return done(null, false, req.flash('err','password'));
@@ -143,18 +146,6 @@ passport.use(
 )
 
 
-
-
-
-// passport.use(new JWTStrategy({
-//         jwtFromRequest : extractJWT.fromAuthHeaderAsBearerToken(),
-//         secretOrKey : SECRET
-//     },
-//     function (jwtPayload, done){
-//         return UserModel
-//     }
-    
-//     ))
 
 router.get('/signin', function (req, res) {
     var flash = req.flash('err');

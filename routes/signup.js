@@ -58,8 +58,8 @@ router.post('/signup', async function(req, res){
                         var query2 = `INSERT INTO user(email, password, name, role,salt) VALUES("${data['email']}","${hash}","${data['name']}", "unauth" ,"${salt}")`;
                         console.log("addUser query:"+ query2);
                         connection.query(query2,(err,result)=>{
-                            mailer.sendEmail(data['email']);
-                            res.redirect('/');
+                            mailer.sendEmail(data['email'],'confirm');
+                            res.redirect('/certification/done');
                             return;
                         });   
                     }
@@ -73,6 +73,10 @@ router.post('/signup', async function(req, res){
             console.log("error!"+err);
         }
     });
+});
+
+router.get('/sendmail', function(req, res){
+
 });
 
 

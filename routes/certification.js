@@ -23,7 +23,7 @@ router.get('/confirmation/:token', (req, res) => {
                     console.log(err);
                 }else{
                     console.log("query"+query);
-                    res.redirect('/certification/done');
+                    res.redirect('/confirm');
                 }
             });   
         }else{
@@ -41,6 +41,17 @@ router.get('/certification/done',(req,res) => {
     try{
         res.render('certification_done',{
             title: 'certification_done'
+        });
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
+router.get('/confirm',(req,res) => {
+    try{
+        res.render('confirm',{
+            title: 'confirm'
         });
     }
     catch(err){
