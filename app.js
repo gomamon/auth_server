@@ -37,9 +37,10 @@ app.use(session({
     host: redisConfig.host,
     port: redisConfig.port,
     client: redisclient,
-    prefix : "session"
+    saveUninitialized:false, 
+    resave : false,
   }),
-  saveUninitialized:true, 
+  saveUninitialized:false, 
   resave : false,
   cookie:{
     path: '/',

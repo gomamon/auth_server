@@ -193,5 +193,5 @@ router.post('/signin',
     }
 )
 
-module.exports = passport;
+// module.exports = passport;
 module.exports = router;
