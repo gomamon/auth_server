@@ -65,15 +65,15 @@ module.exports = {
         )
 
         var subjects = {
-            confirm : '훈민정음 이메일인증 해주시지요.',
-            reset : '훈민정음 비밀번호 초기화'
+            confirm : '고마몬 이메일인증 해주시지요.',
+            reset : '고마몬 비밀번호 초기화'
         }
         var url = {
             confirm : `http://localhost:3000/confirmation/${confirmToken}`,
             reset : `http://localhost:3000/reset/password/${resetToken}`
         }
         var contents = {
-            confirm : `해당 링크를 누르면 자네는 훈민정음의 진정한 회원이 될수있지... <a href="${url[type]}">${url[type]}</a>`,
+            confirm : `해당 링크를 누르면 자네는 고마몬의 진정한 회원이 될수있지... <a href="${url[type]}">${url[type]}</a>`,
             reset : `해당 링크를 누르면 자네의 비밀번호를 다시 설정할 수 있을 걸세 <a href="${url[type]}">${url[type]}</a>`,
         }
 

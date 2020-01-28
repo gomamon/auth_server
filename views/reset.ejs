@@ -1,34 +1,11 @@
 <html>
 <head>
-	<meta charset="utf-8">
-	<title><%= title %></title>
-	<link rel='stylesheet' href='/stylesheets/style.css'>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-
+	<%- include ('./layout/head') %>
 </head>
-<body >
+<body>
 	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-			  <span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-				<a class="navbar-brand" href="/">AUTH_GOMAMON</a>
-			
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item active text-light">
-					</li>
-				</ul>
-
-				<p class="nav-link my-2 my-sm-0 text-light">
-					로그인 해주세요!
-				</p>
-				<a class="nav-link btn btn-outline-success my-2 my-sm-0" href="/signin">Sign in</a>
-			</div>
-		</nav>
+		<%- include ('./layout/header_not_logged') %>
 	</header>
-
 	<main>
 		<form action="/reset" class="form-signin" method="post">
 			<div class="text-center pb-3">

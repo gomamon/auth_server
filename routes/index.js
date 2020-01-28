@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 	  } else {
 		res.render('index',{
-			title: "who are you?",
+			title: "Welcome to gomamon's AUTH server ",
 			logged_in : false
 		})
 	  }
