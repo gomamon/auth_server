@@ -149,14 +149,14 @@ passport.use(
 
 router.get('/signin', function (req, res) {
 
-    // var flash = req.flash('err');
+    var flash = req.flash('err');
     console.log(req.session);
     // console.log(flash);
     if (req.user !== undefined) {
         res.redirect('/');
     } 
     else {
-        if(req.flash('err') == null || req.flash('err') == ''){
+        if(flash == null || flash == ''){           
             console.log(req.session);
             res.render('signin', {
                 title: 'signin',
@@ -174,8 +174,7 @@ router.get('/signin', function (req, res) {
             res.render('signin', {
                 title: 'signin',
                 wrong: true,
-                errmsg: errmsg[flash] ,
-                errtype: req.flash('err')
+                errmsg: errmsg[flash],
             });
         }
     }
