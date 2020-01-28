@@ -7,6 +7,14 @@ var jwt = require("jsonwebtoken");
 var randtoken = require("rand-token");
 var jwtconfig = require('../config').jwt
 
+//redis
+var redis = require('redis');
+var session = require('express-session');
+var redisStore = require('connect-redis')(session);
+var redisConfig = require('../config').redis;
+var redisclient = redis.createClient(redisConfig);
+
+
 var smptAuth = {
     user: mailconfig.email,
     pass: mailconfig.password
@@ -19,6 +27,7 @@ var transporter = nodemailer.createTransport(
         auth: smptAuth
     })
 )
+
 
 function getRandomStr() {
 	var arr  = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -41,7 +50,7 @@ module.exports = {
             },
             jwtconfig.certification,
             {
-                expiresIn: '1d',
+                expiresIn: '10m',
             }
         )
         var resetToken = jwt.sign(
@@ -78,9 +87,11 @@ module.exports = {
             if(err){
                 console.log("smpterror!"+err);
             }else{
+                // redisclient.sadd(url[type],'');
                 console.log(res);
             }
         })
     }
 }
     
+

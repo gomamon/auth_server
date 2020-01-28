@@ -38,7 +38,12 @@ const SECRET = require('../config').jwt
 
 
 
+// const bodyParser = require('body-parser')
+// const jwt = require('jsonwebtoken')
+// const randtoken = require('rand-token')
 
+// const refreshTokens = {}
+// const SECRET = require('../config').jwt
 
 // token start
 					// var user = {

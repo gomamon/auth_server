@@ -11,6 +11,14 @@ connection.connect();
 var jwt = require("jsonwebtoken");
 var SECRET = require('../config').jwt.certification;
 
+var redis = require('redis');
+var session = require('express-session');
+var redisStore = require('connect-redis')(session);
+var redisConfig = require('../config').redis;
+var redisclient = redis.createClient(redisConfig);
+
+
+
 
 router.get('/confirmation/:token', (req, res) => {
     try{

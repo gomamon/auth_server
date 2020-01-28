@@ -81,9 +81,10 @@ router.post('/reset/submit-password', (req, res) => {
                                 console.log("here!"+result);
                                 res.clearCookie('reset_token')
                                 res.redirect("/reset/password-done");
-                                // return;
+                                return;
                             }else{
                                 console.log("dberror! "+err);
+                                return;
                             }
                         });   
                     }

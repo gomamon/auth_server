@@ -148,13 +148,16 @@ passport.use(
 
 
 router.get('/signin', function (req, res) {
-    var flash = req.flash('err');
-    console.log(flash);
+
+    // var flash = req.flash('err');
+    console.log(req.session);
+    // console.log(flash);
     if (req.user !== undefined) {
         res.redirect('/');
     } 
     else {
-        if(flash == null || flash == ''){
+        if(req.flash('err') == null || req.flash('err') == ''){
+            console.log(req.session);
             res.render('signin', {
                 title: 'signin',
                 wrong: false,
@@ -167,16 +170,15 @@ router.get('/signin', function (req, res) {
                 password: '삐빕- 틀린 비밀번호를 입력하셨습니다!',
                 email: '삐빕- 존재하지 않는 이메일입니다!'
             }
-
+            console.log(req.session);
             res.render('signin', {
                 title: 'signin',
                 wrong: true,
                 errmsg: errmsg[flash] ,
-                errtype: flash
+                errtype: req.flash('err')
             });
         }
     }
-  
   });
 
 router.post('/signin', 
@@ -184,13 +186,10 @@ router.post('/signin',
         'local',
         {
             failureRedirect: '/signin', 
+            successRedirect: '/',
             failureFlash: true
         }
-    ),
-    function(req,res){
-        console.log("login Success!");        
-        res.redirect('/');
-    }
+    )
 )
 
 // module.exports = passport;

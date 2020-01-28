@@ -42,12 +42,12 @@ app.use(session({
   }),
   saveUninitialized:false, 
   resave : false,
-  cookie:{
-    path: '/',
-    httpOnly: true,
-    secure: false,
-    maxAge: 1000*60*60*24*30
-  }
+  // cookie:{
+  //   path: '/',
+  //   httpOnly: true,
+  //   secure: false,
+  //   maxAge: 1000*60*60*24*30
+  // }
 }));
 
 
