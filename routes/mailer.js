@@ -41,7 +41,7 @@ function getRandomStr() {
 	
 
 module.exports = {
-    sendEmail: (emailto, type)=>{ 
+    sendEmail: (emailto, type, req)=>{ 
 
         var confirmToken = jwt.sign(
             {
@@ -87,7 +87,6 @@ module.exports = {
             if(err){
                 console.log("smpterror!"+err);
             }else{
-                // redisclient.sadd(url[type],'');
                 console.log(res);
             }
         })
