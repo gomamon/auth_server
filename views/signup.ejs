@@ -32,18 +32,69 @@
 
 			<div class="input-group mb-3">
 				<label for="password" class="sr-only">Password</label>
-				<input type="password" name= "password"id="password" class="form-control" placeholder="Password" required>
+				<input type="password" name= "password" id="password" class="form-control" placeholder="Password" required>
+				<div class="invalid-feedback" id="pass-feedback">
+					영문, 숫자를 포함한 6자리이상 16자리 미만의 비밀번호를 입력해 주세요
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<label for="password-check" class="sr-only">Password Check</label>
+				<input type="password" name= "password-check" id="password-check" class="form-control" placeholder="Password Check" required>
+				<div class="invalid-feedback" id="passcheck-feedback">
+					위 비밀번호랑 달라요오!
+				</div>
 			</div>
 
-			
-
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+			<button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 		</form>
 	</main>
-
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script>
 
+
+		$("#password-check").keyup(function(){
+			var passCheck=$(this).val();
+			var pass=$("#password").val();
+
+			if(passCheck==pass){
+				$("#passcheck-feedback").hide();
+				$("#password-check").removeClass("is-invalid");
+				$("button#submit").removeAttr("disabled");
+
+			}else{
+				$("#passcheck-feedback").show();
+				$("#password-check").addClass("is-invalid");
+				$("button#submit").attr("disabled","disabled");
+			}
+		});
+		$("#password").keyup(function(){
+			var regExpPassword = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,16}$/;
+			var pass=$(this).val();
+			var passCheck=$("#password-check").val();
+
+			if(regExpPassword.test(pass)){
+				$("#pass-feedback").hide();
+				$("#password").removeClass("is-invalid");
+				$("button#submit").removeAttr("disabled");
+			}else{
+				$("#pass-feedback").show();
+				$("#password").addClass("is-invalid");
+				$("button#submit").attr("disabled","disabled");
+			}
+
+			if(passCheck==pass){
+				$("#passcheck-feedback").hide();
+				$("#password-check").removeClass("is-invalid");
+				$("button#submit").removeAttr("disabled");
+			}else{
+				$("#passcheck-feedback").show();
+				$("#password-check").addClass("is-invalid");
+				$("button#submit").attr("disabled","disabled");
+			}
+		});
+
+	</script>
 </body>
 </html>
